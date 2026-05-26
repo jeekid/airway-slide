@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<title>Emergency Airway — One-Slide Cheat Sheet</title>
+<style>
+  :root{
+    --bg:#0e1116;
+    --panel:#161b22;
+    --panel2:#1c232c;
+    --border:#2a323d;
+    --text:#e6edf3;
+    --muted:#9aa7b4;
+    --accent:#4ea1ff;
+    --warn:#ffb454;
+    --danger:#ff6b6b;
+    --ok:#5fd17a;
+    --purple:#c98bff;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:#000;height:100%;font-family:-apple-system,"PingFang TC","Helvetica Neue",Arial,sans-serif;color:var(--text);overflow:hidden}
+  body{display:flex;align-items:center;justify-content:center}
+
+  /* 固定 16:9，等比縮放到視窗 */
+  .stage{
+    width:1920px;height:1080px;
+    transform-origin:center center;
+    background:var(--bg);
+    display:grid;
+    grid-template-rows:60px 1fr;
+    padding:18px 22px 22px;
+  }
+
+  header{
+    display:flex;align-items:center;justify-content:space-between;
+    border-bottom:1px solid var(--border);padding-bottom:8px;
+  }
+  header h1{font-size:26px;font-weight:700;letter-spacing:.5px}
+  header h1 .arrow{color:var(--muted);margin:0 10px;font-weight:400}
+  header .tag{font-size:14px;color:var(--muted)}
+
+  .grid{
+    display:grid;
+    grid-template-columns:1fr 1.15fr 1fr;
+    grid-template-rows:1fr auto 1fr;
+    gap:10px;margin-top:10px;
+  }
+  .panel{
+    background:var(--panel);
+    border:1px solid var(--border);border-radius:10px;
+    padding:12px 14px;display:flex;flex-direction:column;gap:6px;
+    position:relative;overflow:hidden;
+  }
+  .panel h2{
+    font-size:17px;display:flex;align-items:center;gap:8px;
+    border-bottom:1px dashed var(--border);padding-bottom:5px;margin-bottom:4px;
+  }
+  .panel h2 .num{
+    width:22px;height:22px;border-radius:50%;
+    display:inline-flex;align-items:center;justify-content:center;
+    font-size:13px;font-weight:700;color:#000;
+  }
+  .p1 h2 .num{background:var(--accent)}
+  .p2 h2 .num{background:var(--warn)}
+  .p3 h2 .num{background:var(--purple)}
+  .p4 h2 .num{background:var(--ok)}
+  .p5 h2 .num{background:var(--danger)}
+  .p6 h2 .num{background:#7adcff}
+
+  ul{list-style:none;font-size:13.5px;line-height:1.55}
+  ul li{padding-left:14px;position:relative}
+  ul li::before{content:"▸";position:absolute;left:0;color:var(--muted)}
+  .small{font-size:12.5px;color:var(--muted)}
+  b.k{color:var(--accent)}
+  b.w{color:var(--warn)}
+  b.d{color:var(--danger)}
+  b.g{color:var(--ok)}
+  b.p{color:var(--purple)}
+
+  /* tables */
+  table{width:100%;border-collapse:collapse;font-size:12.5px}
+  th,td{padding:4px 6px;border-bottom:1px solid var(--border);text-align:left;vertical-align:top}
+  th{color:var(--warn);font-weight:600;width:78px;white-space:nowrap}
+  td .mn{color:var(--text);font-weight:700;letter-spacing:.5px}
+  /* Awake/DSI comparison table — equal columns, no row-label width forcing */
+  table.cmp tr:first-child td{color:var(--ok);font-weight:600;border-bottom:1px solid var(--border)}
+  table.cmp th{width:62px}
+
+  /* RSI list */
+  ol.ps{list-style:none;counter-reset:p;font-size:13px;line-height:1.5}
+  ol.ps li{counter-increment:p;padding-left:24px;position:relative;margin-bottom:1px}
+  ol.ps li::before{
+    content:"P" counter(p);
+    position:absolute;left:0;top:0;
+    color:var(--purple);font-weight:700;font-size:12px;
+  }
+
+  /* DSI flow */
+  .flow{
+    display:flex;align-items:center;gap:6px;flex-wrap:wrap;
+    font-size:12.5px;margin-top:2px;
+  }
+  .chip{
+    background:var(--panel2);border:1px solid var(--border);
+    border-radius:6px;padding:3px 7px;white-space:nowrap;
+  }
+  .chip.k{border-color:var(--accent);color:var(--accent)}
+  .chip.g{border-color:var(--ok);color:var(--ok)}
+  .chip.d{border-color:var(--danger);color:var(--danger)}
+  .arr{color:var(--muted)}
+
+  /* Failed airway tree */
+  pre.tree{
+    background:var(--panel2);border:1px solid var(--border);
+    border-radius:6px;padding:8px 10px;font-size:12px;line-height:1.45;
+    font-family:"SF Mono",Menlo,monospace;color:var(--text);
+    white-space:pre;overflow:hidden;
+  }
+  pre.tree .y{color:var(--ok)}
+  pre.tree .n{color:var(--danger)}
+  pre.tree .h{color:var(--warn)}
+
+  /* image area */
+  .ill{
+    position:absolute;opacity:.95;
+  }
+  .ill.tr{top:8px;right:8px}
+  .ill.br{bottom:6px;right:8px}
+
+  footer{
+    position:absolute;bottom:6px;left:22px;right:22px;
+    display:flex;justify-content:space-between;
+    font-size:11px;color:#5d6772;
+  }
+
+  /* Physiological DA banner */
+  .pPhys{grid-column:1 / -1;background:linear-gradient(180deg,#1c1620,#161b22);border-color:#5a2a35}
+  .pPhys h2 .num{background:#ff8da1}
+  .phys-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;font-size:12.5px;line-height:1.4;margin-top:2px}
+  .phys-cell{background:var(--panel2);border:1px solid var(--border);border-radius:6px;padding:6px 8px}
+  .phys-h{font-weight:700;color:#fff;font-size:13.5px;margin-bottom:2px}
+  .phys-r{color:var(--warn);font-size:12px}
+  .phys-fx{color:var(--text);margin-top:2px}
+</style>
+</head>
+<body>
+<div class="stage" id="stage">
+
+  <header>
+    <h1>Emergency Airway
+      <span class="arrow">—</span>
+      Assessment <span class="arrow">→</span> RSI / DSI <span class="arrow">→</span> Failed Airway
+    </h1>
+    <div class="tag">One-slide cheat sheet · 16:9</div>
+  </header>
+
+  <div class="grid">
+
+    <!-- ① Basic Assessment -->
+    <section class="panel p1">
+      <h2><span class="num">1</span> Basic Assessment</h2>
+      <ul>
+        <li><b class="k">A</b> patency / FB / blood / swelling</li>
+        <li><b class="k">B</b> SpO₂ · RR · breath sounds · accessory m.</li>
+        <li><b class="k">Position</b> sniffing；obese → <b class="w">ramped</b>（ear–sternal）</li>
+        <li><b class="k">Pre-Ox</b> NRB <b class="w">flush rate</b> ＋ NC 15L；<span class="small">shunt → <b class="w">BVM + PEEP valve</b> / NIV</span></li>
+        <li><b class="k">Apneic O₂</b> NC 15L 全程開到管子進去（NO-DESAT）</li>
+        <li><b class="k">Plan</b> A→B→C→D（DAS 2015，每階段上限後 escalate）</li>
+      </ul>
+      <!-- Sniffing vs ramped icon -->
+      <svg class="ill br" width="160" height="80" viewBox="0 0 160 80">
+        <g fill="none" stroke="#4ea1ff" stroke-width="1.5">
+          <!-- sniffing -->
+          <line x1="6" y1="60" x2="70" y2="60"/>
+          <circle cx="60" cy="48" r="8"/>
+          <path d="M52 52 Q40 60 6 60"/>
+          <text x="20" y="74" fill="#9aa7b4" font-size="9" stroke="none">sniffing</text>
+          <!-- ramped -->
+          <line x1="90" y1="60" x2="154" y2="60"/>
+          <path d="M90 60 L120 45 L154 38" />
+          <circle cx="148" cy="30" r="8"/>
+          <text x="108" y="74" fill="#9aa7b4" font-size="9" stroke="none">ramped</text>
+        </g>
+      </svg>
+    </section>
+
+    <!-- ② Difficult Airway -->
+    <section class="panel p2">
+      <h2><span class="num">2</span> Difficult Airway — 4 情境 4 口訣</h2>
+      <table>
+        <tr><th>Laryngoscopy</th>
+          <td><span class="mn" style="color:var(--accent)">LEMON</span> · Look / Evaluate <b class="w">3-3-2</b> / Mallampati / Obstruction / Neck mobility</td></tr>
+        <tr><th>Mask vent</th>
+          <td><span class="mn" style="color:var(--warn)">MOANS</span> · Mask seal / Obese·OSA / Age&gt;55 / No teeth / Stiff lungs</td></tr>
+        <tr><th>SGA (LMA)</th>
+          <td><span class="mn" style="color:var(--ok)">RODS</span> · Restricted opening / Obstruction / Distorted / Stiff</td></tr>
+        <tr><th>Cricothyro.</th>
+          <td><span class="mn" style="color:var(--danger)">SMART</span> · Surgery / Mass / Access·anatomy / Radiation / Tumor</td></tr>
+      </table>
+      <div class="small" style="margin-top:4px">
+        <b class="w">3-3-2</b>：mouth opening 3 指 · hyoid→chin 3 指 · thyroid→floor of mouth 2 指
+      </div>
+    </section>
+
+    <!-- ③ RSI 7 Ps -->
+    <section class="panel p3">
+      <h2><span class="num">3</span> RSI — 7 Ps</h2>
+      <ol class="ps">
+        <li><b class="p">Preparation</b> · <span class="small">SOAP-ME</span>（Suction / O₂ / Airway / Pharm / Monitor·EtCO₂）</li>
+        <li><b class="p">Preoxygenation</b> · 3 min FiO₂ 1.0 ／ 8 VC ／ apneic NC</li>
+        <li><b class="p">Pre-treatment</b> · 視情況（fentanyl, lidocaine — 不常規）</li>
+        <li><b class="p">Paralysis + Induction</b>
+          <div class="small" style="margin-top:2px">
+            <b class="k">Etomidate</b> 0.3 ｜ <b class="k">Ketamine</b> 1–2 ｜ <b class="k">Propofol</b> 1.5 mg/kg<br>
+            <b class="d">Sux</b> 1.5 mg/kg ｜ <b class="d">Roc</b> 1.2 mg/kg（RSI 用高劑量）
+          </div>
+        </li>
+        <li><b class="p">Positioning</b> · sniffing / ramped</li>
+        <li><b class="p">Placement + Proof</b> · <b class="g">EtCO₂ waveform</b> 是金標準</li>
+        <li><b class="p">Post-intubation</b> · sedation · lung-protective vent · CXR</li>
+      </ol>
+    </section>
+
+    <!-- ⚠ Physiologically Difficult Airway -->
+    <section class="panel pPhys">
+      <h2><span class="num">!</span> Physiologically Difficult Airway — 「會在管子周圍 arrest 的病人」</h2>
+      <div class="phys-grid">
+        <div class="phys-cell">
+          <div class="phys-h"><b class="d">H</b>ypoxemia</div>
+          <div class="phys-r">shunt → preox 拉不上來</div>
+          <div class="phys-fx">NIV / CPAP preox · ramped · <b class="g">DSI</b> · ECMO 考慮</div>
+        </div>
+        <div class="phys-cell">
+          <div class="phys-h"><b class="d">H</b>ypotension</div>
+          <div class="phys-r">RSI 藥 + PPV → peri-intubation arrest</div>
+          <div class="phys-fx"><b class="k">Ketamine</b> &gt; etomidate · induction <b class="w">↓ 50 %</b> · push-dose pressor（epi 10 μg / phenyl 100 μg）· 補液</div>
+        </div>
+        <div class="phys-cell">
+          <div class="phys-h"><b class="d">A</b>cidosis</div>
+          <div class="phys-r">apnea → pH 崩 → arrest</div>
+          <div class="phys-fx">維持自呼吸 / awake / DSI · 插管後 <b class="w">match MV</b> · pH&lt;7.1 考慮 bicarb</div>
+        </div>
+        <div class="phys-cell">
+          <div class="phys-h"><b class="d">R</b>V failure / pHTN</div>
+          <div class="phys-r">PPV ↑PVR → RV 衰竭</div>
+          <div class="phys-fx">avoid hypoxia / hypercarbia · <b class="w">↓ PEEP</b> · preload neutral · iNO · epoprostenol</div>
+        </div>
+      </div>
+      <div class="small" style="margin-top:4px">
+        <b class="w">口訣</b>：<b class="d">HOP-killers</b>（<u>H</u>ypoxia · <u>O</u>ptimize hemodynamics · <u>p</u>H）<b class="d">＋ RV</b> — 解剖過得了，生理過不了一樣 code
+      </div>
+    </section>
+
+    <!-- ④ Awake / DSI -->
+    <section class="panel p4">
+      <h2><span class="num">4</span> Awake / DSI — 保留自呼吸的兩條路</h2>
+      <table class="cmp">
+        <tr>
+          <td></td>
+          <td><b style="color:var(--ok)">Awake (ATI)</b><span class="small"> · DAS 2019</span></td>
+          <td><b style="color:var(--ok)">DSI</b></td>
+        </tr>
+        <tr><th>適應</th>
+          <td>解剖難 · 預期 CICO · C-spine</td>
+          <td>Agitated · preox 做不到</td></tr>
+        <tr><th>意識</th>
+          <td>完全清醒</td>
+          <td>半 sedate</td></tr>
+        <tr><th>用藥</th>
+          <td><b class="k">Lido 4% 表麻</b> + Dex/Ket 低劑量</td>
+          <td><b class="k">Ketamine 1 mg/kg</b></td></tr>
+        <tr><th>下一步</th>
+          <td>FOI / VL · <b class="d">不上 paralytic</b></td>
+          <td>NIV preox → paralytic → 插</td></tr>
+      </table>
+      <div class="small" style="margin-top:4px;line-height:1.5">
+        共通：<b class="g">保留自呼吸 + airway reflex</b> 當安全網<br>
+        Awake <b class="d">STOP</b>：<u>S</u>edation 輕 · <u>T</u>opicalisation（lido max 9 mg/kg）· <u>O</u>xygen NC 15L · <u>P</u>erformance VL/FOI<br>
+        ⚠ 避免：Propofol / Midazolam（會丟氣道）· 表麻不夠硬插 → vomit / laryngospasm
+      </div>
+    </section>
+
+    <!-- ⑤ Failed Airway -->
+    <section class="panel p5">
+      <h2><span class="num">5</span> Failed Airway Algorithm</h2>
+      <pre class="tree">
+Intubation failed?
+  │
+  ├─ <span class="y">Can oxygenate</span>  (BVM / LMA OK，SpO₂ 撐得住)
+  │     → "<b>STOP &amp; THINK</b>" · 時間是朋友
+  │     └─ Optimize ≤ 3 tries：ELM · bougie · VL · 換刀 · 換人
+  │         不行 → LMA (Plan B) / 喚醒 / 後送
+  │
+  └─ <span class="n">Cannot oxygenate — CICO ★</span>  (SpO₂ 一路掉)
+        → 時間是敵人 · 60 秒內動手
+        └─ <span class="h">eFONA · Surgical cricothyrotomy</span>
+            <b>Scalpel — Bougie — Tube</b>  (10# blade · 6.0 ETT)
+      </pre>
+      <div class="small">
+        <b class="d">3-3-1 rule</b>：3 attempts · 3 operators · 1 decision to cric．
+        喊出「<b class="d">This is a CICO situation</b>」=團隊立刻切 surgical airway mode
+      </div>
+      <!-- Crich landmark -->
+      <svg class="ill tr" width="110" height="70" viewBox="0 0 110 70">
+        <g fill="none" stroke="#ff6b6b" stroke-width="1.4">
+          <path d="M20 60 Q30 35 55 30 Q80 35 90 60"/>
+          <line x1="55" y1="30" x2="55" y2="14"/>
+          <rect x="46" y="36" width="18" height="10" rx="2"/>
+          <line x1="46" y1="50" x2="64" y2="50"/>
+          <text x="68" y="44" fill="#ffb454" font-size="8" stroke="none">thyroid</text>
+          <text x="68" y="54" fill="#ff6b6b" font-size="8" stroke="none">CTM ✚</text>
+          <text x="68" y="64" fill="#9aa7b4" font-size="8" stroke="none">cricoid</text>
+        </g>
+      </svg>
+    </section>
+
+    <!-- ⑥ SALAD -->
+    <section class="panel p6">
+      <h2><span class="num">6</span> SALAD — Suction-Assisted Laryngoscopy &amp; Airway Decontamination</h2>
+      <ul>
+        <li>適應：大量 <b class="d">嘔吐 / 出血 / 分泌物</b> 的 airway（GI bleed、溺水、中毒）</li>
+        <li>器材：<b class="k">rigid suction</b>（Yankauer 或 <b class="k">DuCanto</b> catheter）+ VL 優先</li>
+      </ul>
+      <ol style="font-size:12.5px;line-height:1.5;padding-left:18px">
+        <li>左手 laryngoscope，<b class="w">右手 suction 先進去</b> hypopharynx 持續吸</li>
+        <li>看到 glottis 後，suction 從<b class="w">嘴角左側</b>留置在食道口繼續吸</li>
+        <li>ETT 沿<b class="g">右側</b>送入聲門</li>
+      </ol>
+      <div class="small"><b class="d">原則</b>：Suction first, then look — 永遠不要在血/嘔吐物海裡找聲門</div>
+      <!-- SALAD diagram -->
+      <svg class="ill br" width="150" height="78" viewBox="0 0 150 78">
+        <g fill="none" stroke="#7adcff" stroke-width="1.4">
+          <ellipse cx="75" cy="40" rx="55" ry="28"/>
+          <path d="M55 30 Q75 50 95 30" stroke="#9aa7b4"/>
+          <!-- suction left -->
+          <line x1="10" y1="20" x2="68" y2="44" stroke="#ffb454" stroke-width="2"/>
+          <circle cx="68" cy="44" r="2.5" fill="#ffb454" stroke="none"/>
+          <text x="6" y="14" fill="#ffb454" font-size="8" stroke="none">suction</text>
+          <!-- ETT right -->
+          <line x1="140" y1="20" x2="82" y2="44" stroke="#5fd17a" stroke-width="2"/>
+          <circle cx="82" cy="44" r="2.5" fill="#5fd17a" stroke="none"/>
+          <text x="120" y="14" fill="#5fd17a" font-size="8" stroke="none">ETT</text>
+        </g>
+      </svg>
+    </section>
+
+  </div>
+
+  <footer>
+    <span>Refs: Walls' Manual of Emergency Airway Mgmt · DAS 2015 · EMCrit / DuCanto</span>
+    <span>© Teaching slide — verbal explanation accompanies this slide</span>
+  </footer>
+
+</div>
+
+<script>
+  // 自動把 1920x1080 stage 等比縮放到視窗
+  function fit(){
+    const s=document.getElementById('stage');
+    const sx=window.innerWidth/1920, sy=window.innerHeight/1080;
+    const k=Math.min(sx,sy);
+    s.style.transform=`scale(${k})`;
+  }
+  window.addEventListener('resize',fit);fit();
+</script>
+</body>
+</html>
