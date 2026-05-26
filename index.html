@@ -1,6 +1,50 @@
 <!DOCTYPE html>
-<meta charset="utf-8">
-<title>Emergency Airway Slide</title>
-<meta http-equiv="refresh" content="0; url=slide.html">
-<link rel="canonical" href="slide.html">
-<p>Redirecting to <a href="slide.html">slide.html</a>…</p>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<title>Emergency Airway — Teaching</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;background:#0e1116;color:#e6edf3;
+    font-family:-apple-system,"PingFang TC","Helvetica Neue",Arial,sans-serif;}
+  body{display:flex;align-items:center;justify-content:center;flex-direction:column;padding:30px}
+  h1{font-size:38px;margin-bottom:8px;letter-spacing:.5px}
+  .sub{color:#9aa7b4;margin-bottom:40px;font-size:18px}
+  .opts{display:flex;gap:24px;flex-wrap:wrap;justify-content:center}
+  a.card{
+    background:#161b22;border:1px solid #2a323d;border-radius:14px;
+    padding:30px 36px;text-decoration:none;color:#e6edf3;
+    width:320px;transition:transform .15s, border-color .15s;
+  }
+  a.card:hover{transform:translateY(-3px);border-color:#4ea1ff}
+  a.card h2{font-size:24px;margin-bottom:10px;color:#fff}
+  a.card .tag{color:#4ea1ff;font-size:14px;letter-spacing:1px}
+  a.card.deck .tag{color:#5fd17a}
+  a.card p{color:#9aa7b4;font-size:15px;line-height:1.55;margin-top:10px}
+  footer{margin-top:50px;color:#5d6772;font-size:13px}
+  kbd{background:#1c232c;border:1px solid #2a323d;border-radius:4px;
+      padding:1px 7px;font-family:monospace;font-size:13px}
+</style>
+</head>
+<body>
+  <h1>Emergency Airway</h1>
+  <div class="sub">Teaching materials · choose your format</div>
+
+  <div class="opts">
+    <a class="card deck" href="deck.html">
+      <div class="tag">▶ PRESENTATION</div>
+      <h2>7-Slide Deck</h2>
+      <p>上課用。左右鍵翻頁，每張一個主題：評估 → 解剖／生理困難 → RSI → Awake/DSI → CICO → SALAD。</p>
+    </a>
+    <a class="card" href="slide.html">
+      <div class="tag">▣ CHEAT SHEET</div>
+      <h2>1-Page Overview</h2>
+      <p>一張 16:9 全內容濃縮版。適合當講義、印出來、或當查找用 reference。</p>
+    </a>
+  </div>
+
+  <footer>
+    在 deck 內按 <kbd>O</kbd> 可隨時切到一頁版 · <kbd>?</kbd> 顯示快捷鍵
+  </footer>
+</body>
+</html>
